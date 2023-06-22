@@ -7,7 +7,7 @@ export const actions = {
 		// 이 함수가 하는 일은 authProviderRedirect 주소를 만들어서 구글로 요청을 보냄.
 		// 구글은 redirectURL로 다시 redirect 시킴
 		// redirectURL은 우리의 api 서버인 +server.ts로 가서 여기서 authWithOAuthCode 함수로 토큰을 받는다.
-		console.log('여기는 login actions 함수야!!');
+		// console.log('여기는 login actions 함수야!!');
 
 		//
 		const authMethods = await locals.pb?.collection('users').listAuthMethods();

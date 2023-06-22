@@ -4,9 +4,9 @@ import type { Handle } from '@sveltejs/kit';
 
 export const handle = (async ({ event, resolve }) => {
 	//
-	console.log('hooks.server.ts 진입 체크');
-	console.log('pb.authStore.isValid', pb.authStore.isValid);
-	console.log('pb.authStore.token', pb.authStore.token);
+	// console.log('hooks.server.ts 진입 체크');
+	// console.log('pb.authStore.isValid', pb.authStore.isValid);
+	// console.log('pb.authStore.token', pb.authStore.token);
 	//
 
 	// before
@@ -14,14 +14,14 @@ export const handle = (async ({ event, resolve }) => {
 	// console.log('before cookie 확인', event.request.headers.get('cookie'));
 
 	// next we need to check if the token is still valid
-	if (pb.authStore.isValid) {
-		try {
-			await pb.collection('users').authRefresh();
-			console.log('authStore.isValid해서 authRefresh 했나?');
-		} catch (_) {
-			pb.authStore.clear();
-		}
-	}
+	// if (pb.authStore.isValid) {
+	// 	try {
+	// 		await pb.collection('users').authRefresh();
+	// 		console.log('authStore.isValid해서 authRefresh 했나?');
+	// 	} catch (_) {
+	// 		pb.authStore.clear();
+	// 	}
+	// }
 
 	event.locals.pb = pb;
 	event.locals.user = structuredClone(pb.authStore.model);
