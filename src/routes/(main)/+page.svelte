@@ -3,5 +3,5 @@
 </script>
 
 <div class="p-16">
-	<Heading class="h1">테스트입니다</Heading>
+	<Heading class="h1">메인페이지</Heading>
 </div>

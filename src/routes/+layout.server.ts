@@ -1,9 +1,9 @@
 import type { LayoutServerLoad } from './$types';
 
-export const load = (async ({ locals }) => {
+export const load = (({ locals }) => {
 	if (locals.user) {
 		return {
-			profile: locals.user
+			user: locals.user
 		};
 	}
 }) satisfies LayoutServerLoad;

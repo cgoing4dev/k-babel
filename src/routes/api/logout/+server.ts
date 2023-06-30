@@ -3,6 +3,7 @@ import type { RequestHandler } from './$types';
 
 export const GET = (async ({ locals }) => {
 	locals.pb.authStore.clear();
+	locals.user = null;
 
 	console.log('authStore.clear 수행');
 
