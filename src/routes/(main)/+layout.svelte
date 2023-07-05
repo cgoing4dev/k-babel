@@ -12,40 +12,69 @@
 
 	// Sidebar에서 쓰이고 있음
 	import { page } from '$app/stores';
-	let spanClass = 'flex-1 ml-3 whitespace-nowrap';
+	let activeClass =
+		'flex items-center p-2 text-base font-normal text-gray-900 bg-indigo-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-indigo-100 dark:hover:bg-gray-700';
 	$: activeUrl = $page.url.pathname;
+
+	const sideNavMenu = [
+		{
+			title: 'Home',
+			href: '/',
+			icon: '🏠'
+		},
+		{
+			title: 'Reading List',
+			href: '/readingList',
+			icon: '📜'
+		},
+		{
+			title: 'Video',
+			href: '/video',
+			icon: '📺'
+		},
+		{
+			title: 'Tags',
+			href: '/tags',
+			icon: '🏷️'
+		},
+		{
+			title: 'FAQ',
+			href: '/faq',
+			icon: '💡'
+		},
+		{
+			title: 'Shop',
+			href: '/shop',
+			icon: '🎁'
+		},
+		{
+			title: 'About',
+			href: '/about',
+			icon: '❓'
+		},
+		{
+			title: 'Contact',
+			href: '/contact',
+			icon: '📧'
+		}
+	];
 </script>
 
 <div class="flex">
 	<Sidebar class="hidden md:block">
-		<SidebarWrapper>
+		<SidebarWrapper class="rounded-2xl">
 			<SidebarGroup>
-				<SidebarItem label="Home" href="/">
-					<svelte:fragment slot="icon">🏠</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Reading List" href="/readinglist">
-					<svelte:fragment slot="icon">📜</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Video" href="/video">
-					<svelte:fragment slot="icon">📺</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Tags" href="/tags">
-					<svelte:fragment slot="icon">🏷️</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="FAQ" href="/faq">
-					<svelte:fragment slot="icon">💡</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Shop" href="/shop">
-					<svelte:fragment slot="icon">🎁</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="About" href="/about">
-					<svelte:fragment slot="icon"
-						><img src="/images/logo.svg" class="w-6" alt="Logo" /></svelte:fragment
+				{#each sideNavMenu as navItem}
+					<SidebarItem
+						label={navItem.title}
+						href={navItem.href}
+						{activeClass}
+						class="hover:bg-indigo-100"
+						active={activeUrl === `${navItem.href}`}
 					>
-				</SidebarItem>
-				<SidebarItem label="Contact" href="/contact">
-					<svelte:fragment slot="icon">📧</svelte:fragment>
-				</SidebarItem>
+						<svelte:fragment slot="icon">{navItem.icon}</svelte:fragment>
+					</SidebarItem>
+				{/each}
 			</SidebarGroup>
 		</SidebarWrapper>
 	</Sidebar>
