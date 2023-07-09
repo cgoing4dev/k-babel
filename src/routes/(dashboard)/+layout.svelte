@@ -1,48 +1,68 @@
 <script>
-	import {
-		Card,
-		Sidebar,
-		SidebarBrand,
-		SidebarCta,
-		SidebarDropdownItem,
-		SidebarDropdownWrapper,
-		SidebarGroup,
-		SidebarItem,
-		SidebarWrapper
-	} from 'flowbite-svelte';
+	import { Sidebar, SidebarGroup, SidebarItem, SidebarWrapper } from 'flowbite-svelte';
+
+	import { page } from '$app/stores';
+	let activeClass =
+		'flex items-center p-2 text-base font-normal text-gray-900 bg-indigo-200 dark:bg-gray-700 rounded-lg dark:text-white hover:bg-indigo-100 dark:hover:bg-gray-700';
+	$: activeUrl = $page.url.pathname;
+
+	const sideBarClass = 'bg-white rounded-2xl';
+
+	const sideNavMenu = [
+		{
+			title: 'Post',
+			href: '/dashboard',
+			icon: '✍️'
+		},
+		{
+			title: 'Followers',
+			href: '/dashboard/followers',
+			icon: '👈'
+		},
+		{
+			title: 'Following tags',
+			href: '/dashboard/following_tags',
+			icon: '🔖'
+		},
+		{
+			title: 'Following users',
+			href: '/dashboard/following_users',
+			icon: '👉'
+		},
+		{
+			title: 'Following organizations',
+			href: '/dashboard/following_organizations',
+			icon: '🏴'
+		},
+		{
+			title: 'Analytics',
+			href: '/dashboard/analytics',
+			icon: '📈'
+		}
+	];
 </script>
 
-<h1 class="text-3xl">Dashboard</h1>
-<div class="flex">
-	<Card>임시카드</Card>
-	<Card>임시카드</Card>
-	<Card>임시카드</Card>
-</div>
-
-<div class="flex">
-	<Sidebar class="hidden md:block">
-		<SidebarWrapper>
-			<SidebarGroup>
-				<SidebarItem label="Post" href="/dashboard">
-					<svelte:fragment slot="icon">✍️</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Followers" href="/dashboard/followers">
-					<svelte:fragment slot="icon">👈</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Following tags" href="/dashboard/following_tags">
-					<svelte:fragment slot="icon">🔖</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Following users" href="/dashboard/following_users">
-					<svelte:fragment slot="icon">👉</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Following organizations" href="/dashboard/following_organizations">
-					<svelte:fragment slot="icon">🏴</svelte:fragment>
-				</SidebarItem>
-				<SidebarItem label="Analytics" href="/dashboard/analytics">
-					<svelte:fragment slot="icon">📈</svelte:fragment>
-				</SidebarItem>
-			</SidebarGroup>
-		</SidebarWrapper>
-	</Sidebar>
-	<slot />
+<div class="flex flex-row h-screen mt-4">
+	<div class="mx-4">
+		<Sidebar class="hidden md:block">
+			<SidebarWrapper class={sideBarClass}>
+				<SidebarGroup>
+					{#each sideNavMenu as navItem}
+						<SidebarItem
+							label={navItem.title}
+							href={navItem.href}
+							{activeClass}
+							class="hover:bg-indigo-100"
+							active={activeUrl === `${navItem.href}`}
+						>
+							<svelte:fragment slot="icon">{navItem.icon}</svelte:fragment>
+						</SidebarItem>
+					{/each}
+				</SidebarGroup>
+			</SidebarWrapper>
+		</Sidebar>
+	</div>
+	<div class="flex-1 mr-4">
+		<slot />
+	</div>
 </div>

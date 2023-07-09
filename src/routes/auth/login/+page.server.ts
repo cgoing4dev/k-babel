@@ -9,6 +9,8 @@ export const actions = {
 			const user = await locals.pb
 				.collection('users')
 				.authWithPassword(data.get('email') as string, data.get('password') as string);
+			// authWithPassword 함수는 authStore를 업데이트함.
+			// 로그인한 user model로
 
 			if (!user.record.verified) {
 				locals.pb.authStore.clear();

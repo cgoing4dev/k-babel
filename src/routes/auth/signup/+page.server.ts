@@ -1,25 +1,24 @@
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions } from './$types';
 
 export const actions = {
 	signup: async ({ locals, request }) => {
-		const data = Object.fromEntries(await request.formData()) as {
-			name: string;
-			email: string;
-			password: string;
-			passwordConfirm: string;
-		};
+		const data = await request.formData();
+		const email = data.get('email') as string;
+
+		const usernameByEmail = email.split('@')[0];
+		data.append('username', usernameByEmail);
 
 		try {
 			await locals.pb.collection('users').create(data);
-			await locals.pb.collection('users').requestVerification(data.email);
-		} catch (e) {
-			console.log(e);
+			await locals.pb.collection('users').requestVerification(email);
+		} catch (err) {
+			console.log('Error: ', err);
 			return fail(400, { error: 'error occurred' });
 		}
 
 		return {
-			success: data.email
+			success: email
 		};
 
 		// throw redirect(303, '/auth/login');
